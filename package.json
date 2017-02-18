@@ -30,7 +30,9 @@
     "await",
     "https",
     "ssl",
-    "easy"
+    "easy",
+    "redis",
+    "ioredis"
   ],
   "author": "Evheniy Bystrov",
   "license": "MIT",

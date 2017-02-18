@@ -12,6 +12,12 @@ test_script:
   - npm run lint
   - npm run test:security
   - npm run test:code
-build: off
-services:
-  - redis-server
+before_build:
+  - choco install redis-64
+  - redis-server --service-install
+  - redis-server --service-start
+  - nuget restore .\Hangfire.Redis.StackExchange.sln
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal

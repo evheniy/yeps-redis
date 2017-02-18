@@ -60,6 +60,16 @@ app.js
         createServer(app.resolve()).
         listen(parseInt(process.env.PORT || '3000', 10));
         
+config/default.json
+
+    {
+      "redis": {
+        "host": "127.0.0.1",
+        "port": 6379
+      }
+    }
+
+
 Run app (node.js > 7.0.0):
 
     node --harmony app.js
@@ -70,5 +80,7 @@ Run app (node.js > 7.0.0):
 * [yeps](https://github.com/evheniy/yeps)
 * [yeps-router](https://github.com/evheniy/yeps-router)
 * [yeps-error](https://github.com/evheniy/yeps-error)
+* [ioredis](https://github.com/luin/ioredis)
+* [config](https://github.com/lorenwest/node-config)
      
      

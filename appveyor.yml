@@ -16,7 +16,4 @@ before_build:
   - choco install redis-64
   - redis-server --service-install
   - redis-server --service-start
-build:
-  publish_nuget: true
-  publish_nuget_symbols: true
-  verbosity: minimal
+build: off

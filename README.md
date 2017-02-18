@@ -54,7 +54,7 @@ app.js
         ctx.res.end(data); 
     });
     
-    app.then(router.resolbe());
+    app.then(router.resolve());
     
     http.
         createServer(app.resolve()).

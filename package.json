@@ -1,7 +1,7 @@
 {
   "name": "yeps-redis",
-  "version": "0.0.4",
-  "description": "Promise based redis client for YEPS - ioredis",
+  "version": "0.0.5",
+  "description": "YEPS promise based redis client",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/npm-run-all --parallel lint:**",

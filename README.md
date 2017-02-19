@@ -1,7 +1,7 @@
 # YEPS ioredis
 
 
-Promise based redis client for YEPS
+YEPS Promise based redis client
 
 [![NPM](https://nodei.co/npm/yeps-redis.png)](https://npmjs.org/package/yeps-redis)
 

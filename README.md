@@ -77,10 +77,11 @@ Run app (node.js > 7.0.0):
 
 ## Links
 
-* [yeps](https://github.com/evheniy/yeps)
-* [yeps-router](https://github.com/evheniy/yeps-router)
-* [yeps-error](https://github.com/evheniy/yeps-error)
-* [ioredis](https://github.com/luin/ioredis)
-* [config](https://github.com/lorenwest/node-config)
-     
-     
+* [yeps](https://github.com/evheniy/yeps) - YEPS
+* [yeps-benchmark](https://github.com/evheniy/yeps-benchmark) - performance comparison koa2, express and node http
+* [yeps-router](https://github.com/evheniy/yeps-router) - YEPS promise based router
+* [yeps-error](https://github.com/evheniy/yeps-error) - YEPS 404/500 error handler
+* [yeps-logger](https://github.com/evheniy/yeps-logger) - YEPS Async logger - winston
+* [yeps-boilerplate](https://github.com/evheniy/yeps-boilerplate) - YEPS app boilerplate
+* [ioredis](https://github.com/luin/ioredis) - promise based redis client
+* [config](https://github.com/lorenwest/node-config) - node.js config

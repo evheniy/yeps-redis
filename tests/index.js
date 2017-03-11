@@ -5,6 +5,7 @@ const chaiHttp = require('chai-http');
 const http = require('http');
 const Router = require('yeps-router');
 const redis = require('..');
+const storage = require('../redis');
 const expect = chai.expect;
 
 chai.use(chaiHttp);
@@ -79,6 +80,17 @@ describe('YEPS redis test', () => {
 
         expect(isTestFinished1).is.true;
         expect(isTestFinished2).is.true;
+    });
+
+    it('should test storage', async () => {
+
+        await storage.set('test', 'test');
+
+        const data = await storage.get('test');
+
+        expect(data).to.be.equal('test');
+
+        await storage.del('test');
     });
 
 });

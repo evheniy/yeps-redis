@@ -70,9 +70,9 @@ config/default.json
     }
 
 
-Run app (node.js > 7.0.0):
+Run app (node.js > 7.6.0):
 
-    node --harmony app.js
+    node app.js
     
 
 ## Links

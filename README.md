@@ -28,6 +28,19 @@ YEPS Promise based redis client
   
 ## How to use
 
+### Config
+
+config/default.json
+
+    {
+      "redis": {
+        "host": "127.0.0.1",
+        "port": 6379
+      }
+    }
+    
+### Middleware
+
 app.js
 
     const http = require('http');
@@ -56,24 +69,21 @@ app.js
     
     app.then(router.resolve());
     
-    http.
-        createServer(app.resolve()).
-        listen(parseInt(process.env.PORT || '3000', 10));
+    http
+        .createServer(app.resolve())
+        .listen(parseInt(process.env.PORT || '3000', 10));
         
-config/default.json
-
-    {
-      "redis": {
-        "host": "127.0.0.1",
-        "port": 6379
-      }
-    }
-
 
 Run app (node.js > 7.6.0):
 
     node app.js
     
+### In module
+
+    const redis = require('yeps-redis/redis');
+    
+    redis.set('test', 'test');
+
 
 ## Links
 
@@ -82,6 +92,7 @@ Run app (node.js > 7.6.0):
 * [yeps-router](https://github.com/evheniy/yeps-router) - YEPS promise based router
 * [yeps-error](https://github.com/evheniy/yeps-error) - YEPS 404/500 error handler
 * [yeps-logger](https://github.com/evheniy/yeps-logger) - YEPS Async logger - winston
+* [yeps-mysql](https://github.com/evheniy/yeps-mysql) - YEPS promise based mysql client
 * [yeps-boilerplate](https://github.com/evheniy/yeps-boilerplate) - YEPS app boilerplate
 * [yeps-express-wrapper](https://github.com/evheniy/yeps-express-wrapper) - YEPS express wrapper
 * [ioredis](https://github.com/luin/ioredis) - promise based redis client

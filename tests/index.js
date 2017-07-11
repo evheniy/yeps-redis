@@ -1,96 +1,100 @@
 const App = require('yeps');
 const error = require('yeps-error');
+const srv = require('yeps-server');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const http = require('http');
 const Router = require('yeps-router');
 const redis = require('..');
 const storage = require('../redis');
+
 const expect = chai.expect;
 
 chai.use(chaiHttp);
-let app, router;
+
+let app;
+let router;
+let server;
 
 describe('YEPS redis test', () => {
+  beforeEach(() => {
+    app = new App();
+    app.all([
+      error(),
+      redis(),
+    ]);
+    router = new Router();
+    server = srv.createHttpServer(app);
+  });
 
-    beforeEach(() => {
-        app = new App();
-        app.all([
-            error(),
-            redis(),
-        ]);
-        router = new Router();
+  afterEach(() => {
+    server.close();
+  });
+
+  it('should test middleware', async () => {
+    let isTestFinished1 = false;
+    let isTestFinished2 = false;
+
+    app.then(async (ctx) => {
+      await ctx.redis.set('test', 'test');
+      const data = await ctx.redis.get('test');
+
+      expect(data).to.be.equal('test');
+      isTestFinished1 = true;
+
+      ctx.res.writeHead(200);
+      ctx.res.end(data);
     });
 
-    it('should test middleware', async() => {
+    await chai.request(server)
+      .get('/')
+      .send()
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.text).to.be.equal('test');
+        isTestFinished2 = true;
+      });
 
-        let isTestFinished1 = false;
-        let isTestFinished2 = false;
+    expect(isTestFinished1).is.true;
+    expect(isTestFinished2).is.true;
+  });
 
-        app.then(async ctx => {
-            await ctx.redis.set('test', 'test');
-            const data = await ctx.redis.get('test');
+  it('should test router', async () => {
+    let isTestFinished1 = false;
+    let isTestFinished2 = false;
 
-            expect(data).to.be.equal('test');
-            isTestFinished1 = true;
+    router.catch().then(async (ctx) => {
+      await ctx.redis.set('test', 'test');
+      const data = await ctx.redis.get('test');
 
-            ctx.res.writeHead(200);
-            ctx.res.end(data);
-        });
+      expect(data).to.be.equal('test');
+      isTestFinished1 = true;
 
-        await chai.request(http.createServer(app.resolve()))
-            .get('/')
-            .send()
-            .then(res => {
-                expect(res).to.have.status(200);
-                expect(res.text).to.be.equal('test');
-                isTestFinished2 = true;
-            });
-
-        expect(isTestFinished1).is.true;
-        expect(isTestFinished2).is.true;
+      ctx.res.writeHead(200);
+      ctx.res.end(data);
     });
 
-    it('should test router', async() => {
+    app.then(router.resolve());
 
-        let isTestFinished1 = false;
-        let isTestFinished2 = false;
+    await chai.request(server)
+      .get('/')
+      .send()
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.text).to.be.equal('test');
+        isTestFinished2 = true;
+      });
 
-        router.catch().then(async ctx => {
-            await ctx.redis.set('test', 'test');
-            const data = await ctx.redis.get('test');
+    expect(isTestFinished1).is.true;
+    expect(isTestFinished2).is.true;
+  });
 
-            expect(data).to.be.equal('test');
-            isTestFinished1 = true;
+  it('should test storage', async () => {
+    await storage.set('test', 'test');
 
-            ctx.res.writeHead(200);
-            ctx.res.end(data);
-        });
+    const data = await storage.get('test');
 
-        app.then(router.resolve());
+    expect(data).to.be.equal('test');
 
-        await chai.request(http.createServer(app.resolve()))
-            .get('/')
-            .send()
-            .then(res => {
-                expect(res).to.have.status(200);
-                expect(res.text).to.be.equal('test');
-                isTestFinished2 = true;
-            });
-
-        expect(isTestFinished1).is.true;
-        expect(isTestFinished2).is.true;
-    });
-
-    it('should test storage', async () => {
-
-        await storage.set('test', 'test');
-
-        const data = await storage.get('test');
-
-        expect(data).to.be.equal('test');
-
-        await storage.del('test');
-    });
-
+    await storage.del('test');
+  });
 });

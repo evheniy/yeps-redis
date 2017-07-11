@@ -13,7 +13,9 @@
     "report": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "clear": "./node_modules/.bin/rimraf coverage",
     "precommit": "npm run lint && npm test",
-    "prepush": "npm run lint && npm test"
+    "prepush": "npm run lint && npm test",
+    "db:start": "docker run -d --name redis -p 6379:6379 redis:latest",
+    "db:stop": "docker rm -f redis"
   },
   "repository": {
     "type": "git",
@@ -48,13 +50,13 @@
     "node": ">=7.6.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "chai-http": "^3.0.0",
     "coveralls": "^2.11.16",
-    "debug": "^2.6.1",
-    "eslint": "^3.15.0",
-    "eslint-config-eslint": "^3.0.0",
-    "husky": "^0.13.1",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.2.0",
@@ -64,10 +66,12 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
-    "config": "^1.25.1",
-    "ioredis": "^2.5.0",
+    "config": "^1.26.1",
+    "debug": "^2.6.8",
+    "ioredis": "^3.1.1",
     "yeps": "^1.0.0",
-    "yeps-error": "^1.0.0",
-    "yeps-router": "^1.0.0"
+    "yeps-error": "^1.2.0",
+    "yeps-router": "^1.0.0",
+    "yeps-server": "^1.0.0"
   }
 }

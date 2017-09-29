@@ -15,7 +15,9 @@
     "precommit": "npm run lint && npm test",
     "prepush": "npm run lint && npm test",
     "db:start": "docker run -d --name redis -p 6379:6379 redis:latest",
-    "db:stop": "docker rm -f redis"
+    "db:stop": "docker rm -f redis",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -72,6 +74,8 @@
     "yeps": "^1.0.0",
     "yeps-error": "^1.2.0",
     "yeps-router": "^1.0.0",
-    "yeps-server": "^1.0.0"
-  }
+    "yeps-server": "^1.0.0",
+    "snyk": "^1.41.1"
+  },
+  "snyk": true
 }

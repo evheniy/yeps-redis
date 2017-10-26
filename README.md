@@ -24,7 +24,7 @@ YEPS Promise based redis client
 
 ## How to install
 
-  npm i -S yeps-redis
+    npm i -S yeps-redis
   
 ## How to use
 
@@ -41,52 +41,57 @@ config/default.json
     
 ### Middleware
 
-app.js
-
-    const http = require('http');
     const App = require('yeps');
     const Router = require('yeps-router');
+    
     const redis = require('yeps-redis');
+    
     const error = require('yeps-error');
+    const logger = require('yeps-logger');
+    
+    const server = require('yeps-server');
     
     const app = new App();
     const router = new Router();
     
     app.all([
-        redis(),
         error(),
+        logger(),
+        redis(),
     ]);
     
     app.then(async ctx => {
+        await ctx.redis.set('data', 'test');
         const data = await ctx.redis.get('data');
     });
     
     router.get('/url').then(async ctx => {
+        await ctx.redis.set('data', 'test');
         const data = await ctx.redis.get('data');
-        ctx.res.writeHead(200);
+        
+        ctx.res.statusCode = 200;
         ctx.res.end(data); 
     });
     
     app.then(router.resolve());
     
-    http
-        .createServer(app.resolve())
-        .listen(parseInt(process.env.PORT || '3000', 10));
-        
-
-Run app (node.js > 7.6.0):
-
-    node app.js
+    server.createHttpServer(app);
     
-### In module
+
+### Module
 
     const redis = require('yeps-redis/redis');
     
-    redis.set('test', 'test');
+    async () => {
+        await redis.set('test', 'test');
+        const data = await redis.get('test');
+    }
 
 
-## Links
+#### [YEPS documentation](http://yeps.info/)
 
-* [YEPS documentation](http://yeps.info/)
+
+#### Dependencies:
+
 * [ioredis](https://github.com/luin/ioredis) - promise based redis client
 * [config](https://github.com/lorenwest/node-config) - node.js config

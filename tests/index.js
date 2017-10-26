@@ -7,7 +7,7 @@ const Router = require('yeps-router');
 const redis = require('..');
 const storage = require('../redis');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 chai.use(chaiHttp);
 
@@ -30,6 +30,10 @@ describe('YEPS redis test', () => {
     server.close();
   });
 
+  after(() => {
+    storage.disconnect();
+  });
+
   it('should test middleware', async () => {
     let isTestFinished1 = false;
     let isTestFinished2 = false;
@@ -41,7 +45,7 @@ describe('YEPS redis test', () => {
       expect(data).to.be.equal('test');
       isTestFinished1 = true;
 
-      ctx.res.writeHead(200);
+      ctx.res.statusCode = 200;
       ctx.res.end(data);
     });
 

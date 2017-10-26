@@ -1,20 +1,23 @@
 {
   "name": "yeps-redis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "YEPS promise based redis client",
   "main": "index.js",
   "scripts": {
-    "lint": "npm-run-all --parallel lint:**",
+    "lint": "npm-run-all lint:**",
     "lint:js": "eslint index.js tests",
-    "test": "npm-run-all --parallel test:**",
+    "test": "npm-run-all test:**",
+    "test:db:start": "npm run db:start",
+    "test:db:preparing": "node -e \"setTimeout(()=>1, 1000)\"",
     "test:security": "nsp check",
     "test:code": "mocha tests --recursive",
     "test:coverage": "istanbul cover _mocha -- tests --recursive",
+    "test:db:stop": "npm run db:stop",
     "report": "cat ./coverage/lcov.info | coveralls",
     "clear": "rimraf coverage",
     "precommit": "npm run lint && npm test",
     "prepush": "npm run lint && npm test",
-    "db:start": "docker run -d --name redis -p 6379:6379 redis:latest",
+    "db:start": "docker run -d --name redis -p 6379:6379 redis:alpine",
     "db:stop": "docker rm -f redis"
   },
   "repository": {
@@ -50,28 +53,27 @@
     "node": ">=7.6.0"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
-    "chai-http": "^3.0.0",
-    "coveralls": "^2.11.16",
-    "eslint": "^4.2.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.7.0",
-    "husky": "^0.14.3",
+    "chai": "^4.1.2",
+    "chai-http": "*",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "husky": "*",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.2.0",
-    "npm-run-all": "^4.0.1",
-    "nsp": "^2.6.2",
-    "promise-pause-timeout": "^1.0.0",
-    "rimraf": "^2.5.4"
+    "mocha": "^4.0.1",
+    "mocha-lcov-reporter": "*",
+    "npm-run-all": "^4.1.1",
+    "nsp": "^3.0.0",
+    "rimraf": "^2.6.2",
+    "yeps": "^1.0.1",
+    "yeps-error": "^1.2.2",
+    "yeps-router": "^1.1.0",
+    "yeps-server": "^1.1.0"
   },
   "dependencies": {
-    "config": "^1.26.1",
-    "debug": "^2.6.8",
-    "ioredis": "^3.1.1",
-    "yeps": "^1.0.0",
-    "yeps-error": "^1.2.0",
-    "yeps-router": "^1.0.0",
-    "yeps-server": "^1.0.0"
+    "config": "^1.27.0",
+    "debug": "^3.1.0",
+    "ioredis": "^3.2.1"
   }
 }
